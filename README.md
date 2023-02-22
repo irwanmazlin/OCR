@@ -24,31 +24,14 @@ It is recommended to install [anaconda](https://www.anaconda.com/products/indivi
 
 ```bash
 # create new environment
-conda create --name py36-tf2 python=3.6
+conda create --name ocr python=3.8
 
 # activate your environment before installation or running your scripts 
-conda activate py36-tf2
+conda activate ocr
+
+
+pip install imutils
 ``` 
-
-You need first to install tensorflow 2, either with GPU or CPU only support (slow). For Installation with GPU support, you need to have CUDA 10.1 with CUDNN 7.6 to use Tensorflow 2.2.0.
-You can check the compatible versions of any tensorflow version with cuda and cudnn versions from [here](https://www.tensorflow.org/install/source#tested_build_configurations).
-If you have the matching CUDA and CUDNN versions in your system, install tensorflow-gpu as follows: 
-
-```bash
-# if you have NVIDIA GPU with cuda 10.1 and cudnn 7.6
-pip install tensorflow-gpu==2.2.0
-```
-
-Otherwise, a great feature of Anaconda is that it can automatically install a local version of cudatoolkit that is compatible with your tensorflow version (But you should have the proper nvidia gpu drivers installed).
-But be aware that this cuda version will be only available to your python environment (or virtual environment if you created one), and will not be available for other python versions or other environments.
-
-```bash
-# installation from anaconda along with cudatoolkit (tf2 version 2.2.0)
-conda install -c anaconda tensorflow-gpu==2.2.0
-
-# or to install latest version of tensorflow, just type
-conda install -c anaconda tensorflow-gpu
-```
 
 for CPU only support:
 
@@ -60,46 +43,7 @@ pip install tensorflow==2.2.0
 After that, you should install the Object Detection API, which became much easier now after the latest update.
 The official installation instructions can be found [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md), but I will add here the instruction to install it as a python package.
 
-Clone the TensorFlow models repository:
 
-```bash
-git clone https://github.com/tensorflow/models.git
-```
-
-Make sure you have [protobuf compiler](https://grpc.io/docs/protoc-installation/#install-using-a-package-manager) version >= 3.0, by typing `protoc --version`, or install it on Ubuntu by typing `apt install protobuf-compiler`.
-
-Then proceed to the python package installation as follows:
-
-```bash
-# remember to activate your python environment first
-cd models/research
-# compile protos:
-protoc object_detection/protos/*.proto --python_out=.
-# Install TensorFlow Object Detection API as a python package:
-cp object_detection/packages/tf2/setup.py .
-python -m pip install .
-```
-
-The previous commands installs the object detection api as a python package that will be available in your python environment (or virtual environment if you created one),
-and will automatically install all required dependencies if not already installed.
-
-Finally, to test that your installation is correct, type the following command: 
-
-```bash
-# Test the installation.
-python object_detection/builders/model_builder_tf2_test.py
-```
-
-For more installation options, please refer to the original [installation guide](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2.md).
-
-To run the examples in this repo, you will need some additional dependencies:
-
-```bash
-# install OpenCV python package
-pip install opencv-python
-pip install opencv-contrib-python
-```
-------------------------------------------------------------
 
 ## Inference with pre-trained models
 
